@@ -1,0 +1,21 @@
+const express = require("express");
+const router = express.Router();
+const {protect,authorize} = require("../middleware/auth");
+// const authRoutes = require("./authRoutes");
+
+const {
+  addPatient,
+  getAllPatients,
+  updatePatient,
+  deletePatient,
+  completeConsultation
+} = require("../controllers/PatientController");
+
+
+router.post("/add",protect,authorize("admin","doctor","receptionist"), addPatient);
+router.get("/all",protect,authorize("admin","doctor","receptionist","nurse"), getAllPatients);
+router.put("/update/:id",protect,authorize("admin","doctor","receptionist"), updatePatient);
+router.delete("/delete/:id",protect,authorize("admin","doctor","receptionist"), deletePatient);
+router.put("/consult/:id",protect,authorize("admin","doctor","receptionist"), completeConsultation);
+
+module.exports = router;
