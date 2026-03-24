@@ -4,8 +4,9 @@ const User = require("../models/User");
 // ADD PATIENT
 exports.addPatient = async (req, res) => {
   try {
-    
+    // console.log(req.body)
     const patient = new Patient(req.body);
+    console.log(patient)
 
     const savedPatient = await patient.save();
 
@@ -31,7 +32,7 @@ exports.addPatient = async (req, res) => {
 // GET ALL PATIENTS
 exports.getAllPatients = async (req, res) => {
   try {
-
+console.log(req.body)
     const patients = await Patient.find().sort({ createdAt: -1 });
 
     res.status(200).json({
@@ -56,7 +57,7 @@ exports.getAllPatients = async (req, res) => {
 // UPDATE PATIENT
 exports.updatePatient = async (req, res) => {
   try {
-
+console.log(req.body)
     const patient = await Patient.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -92,7 +93,7 @@ exports.updatePatient = async (req, res) => {
 // DELETE PATIENT
 exports.deletePatient = async (req, res) => {
   try {
-
+console.log(req.body)
     const patient = await Patient.findByIdAndDelete(req.params.id);
 
     if (!patient) {
@@ -122,7 +123,7 @@ exports.deletePatient = async (req, res) => {
 
 exports.completeConsultation = async (req, res) => {
   try {
-
+console.log(req.body)
     const patient = await Patient.findById(req.params.id);
 
     if (!patient) {

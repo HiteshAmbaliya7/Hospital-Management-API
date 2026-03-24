@@ -21,11 +21,6 @@ const patientSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    pid :{
-        type: Number,
-        unique:true,
-        required:true
-    },
 
     mobileNumber: {
         type: String,

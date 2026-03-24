@@ -14,6 +14,7 @@ const generateToken = (id) => {
 // @access  Public
 exports.register = async (req, res) => {
   try {
+    
     const { name, email, password,role } = req.body;
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -27,7 +28,7 @@ exports.register = async (req, res) => {
       name,
       email,
       password,
-      role: role || 'petant'
+      role: role || 'receptionist'
     });
     
     
@@ -36,7 +37,7 @@ exports.register = async (req, res) => {
     const token = generateToken(user._id);
     console.log(token);
     
-    res.status(201).cookie(token,{
+    res.status(201).cookie({
   httpOnly: true,      // Prevents JavaScript access (XSS protection)
   secure: true,        // Only sent over HTTPS
   sameSite: 'strict',  // CSRF protection
@@ -414,7 +415,3 @@ exports.doctor = async (req, res) => {
   }
 
 };
-
-
-
-

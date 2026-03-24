@@ -141,7 +141,7 @@
     </form>
 
     <div class="form-footer">
-      Don't have an account? <a href="http://localhost:5000/api/auth/register">Register here</a>
+      Don't have an account? <a href="http://localhost:8000/api/auth/register">Register here</a>
     </div>
   </div>
 
@@ -164,6 +164,8 @@
         });
 
         const result = await response.json();
+        // window.location.href = "/users";
+        window.location.href = "/users";
         alert(result.message || "Login successful");
       } catch (error) {
         console.error(error);

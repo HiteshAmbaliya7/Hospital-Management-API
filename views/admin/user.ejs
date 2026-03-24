@@ -554,7 +554,7 @@
     <!-- ── SIDEBAR ── -->
     <aside class="sidebar">
       <div class="sidebar-logo">
-        <div class="logo-mark">MedSys</div>
+        <div class="logo-mark">Hitesh Ambaliya</div>
         <div class="logo-name">Admin Console</div>
       </div>
 
@@ -745,7 +745,7 @@
             <input
               type="email"
               id="newEmail"
-              placeholder="email@hospital.org"
+              placeholder="email@gmail.com"
             />
           </div>
           <div>
@@ -797,8 +797,9 @@
   // ── FETCH FROM API ──
   async function fetchUsers() {
     try {
-      const response = await fetch("/api/users");
+      const response = await fetch("http://localhost:8000/patient/all");
       const data = await response.json();
+      console.log(data)
 
       users = data.map((user) => ({
         _id: user._id?.toString() || user._id,
