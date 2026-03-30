@@ -63,15 +63,12 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    
+    console.log("login");
+    // console.log(req.body);
     const cookie = req.cookies?.uid;
-    console.log(cookie)
+    // console.log(req.headers)
     
-    // if(!cookie)
-    // {
-    //   return res.json({massage : 'no cookie found'});
-    // }
-    // Check if email and password provided
+    
     if (!email || !password) {
       return res.status(400).json({ message: 'Please provide email and password' });
     }
@@ -104,6 +101,7 @@ exports.login = async (req, res) => {
 res.cookie("token", token, {
   httpOnly: true,
   sameSite: "lax",
+  // sameSite: "none",
   secure: false // true in production
 });
 
@@ -113,29 +111,40 @@ res.cookie("token", token, {
   }
 };
 
-// @desc    Get current logged in user
-// @route   GET /api/auth/me
-// @access  Private
+
 exports.getMe = async (req, res) => {
   try {
-    console.log("getme");
-    let authHeader = req.headers.authorization || req.headers.Authorization;
-    console.log(authHeader);
-    if (authHeader && authHeader.startsWith("Bearer")) {
+    console.log("getMe called");
+
+    let token;
+
+    
+    const authHeader = req.headers.authorization || req.headers.Authorization;
+    if (authHeader && authHeader.startsWith("Bearer ")) {
       token = authHeader.split(" ")[1];
-      if (!token) {
-        return res
-          .status(401)
-          .json({ massage: "no token, auhorization denied " });
-      }
     }
+   
+    else if (req.cookies?.token) {
+      token = req.cookies.token;
+    }
+
+    
+    if (!token) {
+      return res.status(401).json({ message: "No token, authorization denied" });
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id);
-    console.log(user)
+    const user = await User.findById(decoded.id).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     res.status(200).json({
       success: true,
       data: user
     });
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

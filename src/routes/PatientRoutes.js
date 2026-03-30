@@ -11,12 +11,6 @@ const {
   completeConsultation,
 } = require("../controllers/PatientController");
 
-// router.post("/add",authorize('admin', 'doctor', 'receptionist'), addPatient);
-// router.get("/all", getAllPatients);
-// router.put("/update/:id",authorize('admin', 'doctor', 'receptionist'), updatePatient);
-// router.delete("/delete/:id",authorize('admin', 'doctor', 'receptionist'), deletePatient);
-// router.put("/consult/:id",authorize('admin', 'doctor', 'receptionist'), completeConsultation);
-
 router.post(
   "/add",
   protect,

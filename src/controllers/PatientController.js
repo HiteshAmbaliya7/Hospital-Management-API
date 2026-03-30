@@ -6,7 +6,7 @@ exports.addPatient = async (req, res) => {
   try {
     // console.log(req.body)
     const patient = new Patient(req.body);
-    console.log(patient)
+    console.log(patient);
 
     const savedPatient = await patient.save();
 
@@ -32,7 +32,7 @@ exports.addPatient = async (req, res) => {
 // GET ALL PATIENTS
 exports.getAllPatients = async (req, res) => {
   try {
-console.log(req.body)
+    console.log(req.body);
     const patients = await Patient.find().sort({ createdAt: -1 });
 
     res.status(200).json({
